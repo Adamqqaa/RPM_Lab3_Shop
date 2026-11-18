@@ -1,0 +1,88 @@
+<Window x:Class="Lab3_Shop_Baimurzin.ProductEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Товар" Width="560" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" Language="ru-RU"
+        FontFamily="Times New Roman" FontSize="14">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="Label">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,4,10,4"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0,4"/>
+            <Setter Property="Padding" Value="2"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="0,4"/>
+            <Setter Property="DisplayMemberPath" Value="Name"/>
+            <Setter Property="SelectedValuePath" Value="Id"/>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel Margin="16">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- ID виден только при редактировании -->
+            <TextBlock x:Name="IdLabel" Text="ID:" Style="{StaticResource Label}"/>
+            <TextBox x:Name="IdBox" Grid.Column="1" IsReadOnly="True" Background="#EEE"/>
+
+            <TextBlock Grid.Row="1" Text="Артикул:" Style="{StaticResource Label}"/>
+            <TextBox x:Name="ArticleBox" Grid.Row="1" Grid.Column="1" MaxLength="255"/>
+
+            <TextBlock Grid.Row="2" Text="Наименование товара:" Style="{StaticResource Label}"/>
+            <TextBox x:Name="NameBox" Grid.Row="2" Grid.Column="1" MaxLength="255"/>
+
+            <TextBlock Grid.Row="3" Text="Категория товара:" Style="{StaticResource Label}"/>
+            <ComboBox x:Name="CategoryBox" Grid.Row="3" Grid.Column="1"/>
+
+            <TextBlock Grid.Row="4" Text="Описание товара:" Style="{StaticResource Label}"
+                       VerticalAlignment="Top"/>
+            <TextBox x:Name="DescriptionBox" Grid.Row="4" Grid.Column="1" MaxLength="255"
+                     TextWrapping="Wrap" AcceptsReturn="False" Height="60"
+                     VerticalScrollBarVisibility="Auto"/>
+
+            <TextBlock Grid.Row="5" Text="Производитель:" Style="{StaticResource Label}"/>
+            <ComboBox x:Name="ManufacturerBox" Grid.Row="5" Grid.Column="1"/>
+
+            <TextBlock Grid.Row="6" Text="Поставщик:" Style="{StaticResource Label}"/>
+            <ComboBox x:Name="SupplierBox" Grid.Row="6" Grid.Column="1"/>
+
+            <TextBlock Grid.Row="7" Text="Цена, ₽:" Style="{StaticResource Label}"/>
+            <TextBox x:Name="PriceBox" Grid.Row="7" Grid.Column="1"/>
+
+            <TextBlock Grid.Row="8" Text="Количество на складе:" Style="{StaticResource Label}"/>
+            <TextBox x:Name="CountBox" Grid.Row="8" Grid.Column="1"/>
+
+            <TextBlock Grid.Row="9" Text="Действующая скидка, %:" Style="{StaticResource Label}"/>
+            <TextBox x:Name="DiscountBox" Grid.Row="9" Grid.Column="1"/>
+        </Grid>
+
+        <DockPanel Margin="0,16,0,0" LastChildFill="False">
+            <Button x:Name="DeleteButton" Content="Удалить товар" DockPanel.Dock="Left"
+                    Padding="12,4" Click="DeleteButton_Click"/>
+            <Button Content="Отмена" DockPanel.Dock="Right" Padding="12,4" Margin="8,0,0,0"
+                    IsCancel="True"/>
+            <Button x:Name="SaveButton" Content="Сохранить" DockPanel.Dock="Right" Padding="12,4"
+                    IsDefault="True" Click="SaveButton_Click"/>
+        </DockPanel>
+    </StackPanel>
+</Window>

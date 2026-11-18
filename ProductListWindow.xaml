@@ -8,7 +8,9 @@
         <!-- Карточка товара по шаблону: слева данные, справа действующая скидка -->
         <DataTemplate x:Key="ProductCardTemplate">
             <Border x:Name="Card" BorderBrush="Black" BorderThickness="2" Margin="20,8"
-                    Padding="10" Background="White">
+                    Padding="10" Background="White" Cursor="Hand"
+                    ToolTip="Нажмите, чтобы редактировать товар"
+                    MouseLeftButtonUp="Card_MouseLeftButtonUp">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -21,6 +23,10 @@
                                 <Run Text="{Binding CategoryName, Mode=OneWay}"/>
                                 <Run Text=" | "/>
                                 <Run Text="{Binding Article, Mode=OneWay}"/>
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="Наименование товара: "/>
+                                <Run Text="{Binding ProductTitle, Mode=OneWay}"/>
                             </TextBlock>
                             <TextBlock TextTrimming="CharacterEllipsis"
                                        ToolTip="{Binding Description}">
@@ -88,11 +94,14 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="0,0,10,0"/>
                 <TextBox x:Name="SearchBox" Grid.Column="1" Padding="2"
                          TextChanged="SearchBox_TextChanged"
                          ToolTip="Ищет по артикулу, наименованию, категории, описанию, производителю и поставщику. Несколько слов через пробел — все должны найтись."/>
+                <Button x:Name="AddButton" Grid.Column="2" Content="Добавить товар" Margin="10,0,0,0"
+                        Padding="12,2" Click="AddButton_Click"/>
             </Grid>
         </Expander>
 

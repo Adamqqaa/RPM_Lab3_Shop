@@ -76,6 +76,22 @@ public partial class ProductListWindow : Window
         UpdateCounter();
     }
 
+    private void AddButton_Click(object sender, RoutedEventArgs e) => OpenEditor(null);
+
+    private void Card_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (sender is FrameworkElement { DataContext: Product product })
+            OpenEditor(product.Id);
+    }
+
+    // После добавления, редактирования или удаления список перечитывается из БД
+    private void OpenEditor(int? productId)
+    {
+        var editor = new ProductEditWindow(productId) { Owner = this };
+        if (editor.ShowDialog() == true)
+            ReloadProducts();
+    }
+
     private void UpdateCounter()
     {
         int shown = Products.Cast<object>().Count();
