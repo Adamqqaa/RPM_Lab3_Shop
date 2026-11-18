@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using Lab3_Shop_Baimurzin.Models;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ public partial class ProductListWindow : Window
     private readonly CollectionViewSource _source;
     public ICollectionView Products { get; set; }
 
+    private string[] _searchWords = [];
+
     public ProductListWindow()
     {
         InitializeComponent();
@@ -21,6 +24,7 @@ public partial class ProductListWindow : Window
         _products = [];
         _source = new() { Source = _products };
         Products = _source.View;
+        Products.Filter = FilterProduct;
         ReloadProducts();
     }
 
@@ -51,8 +55,30 @@ public partial class ProductListWindow : Window
         UpdateCounter();
     }
 
+    // Каждое слово запроса должно встретиться хотя бы в одном текстовом поле товара,
+    // поэтому можно искать сразу по нескольким атрибутам: "Knauf штукатурка"
+    private bool FilterProduct(object obj)
+    {
+        if (obj is not Product product)
+            return false;
+        if (_searchWords.Length == 0)
+            return true;
+
+        var texts = product.SearchableTexts.ToList();
+        return _searchWords.All(word =>
+            texts.Any(text => text.Contains(word, StringComparison.CurrentCultureIgnoreCase)));
+    }
+
+    private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        _searchWords = SearchBox.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        Products.Refresh();
+        UpdateCounter();
+    }
+
     private void UpdateCounter()
     {
-        CounterText.Text = $"Показано товаров: {_products.Count} из {_products.Count}";
+        int shown = Products.Cast<object>().Count();
+        CounterText.Text = $"Показано товаров: {shown} из {_products.Count}";
     }
 }

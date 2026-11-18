@@ -14,4 +14,17 @@ public partial class Product
     public bool HasDiscount => DiscountValue > 0;
     public bool IsBigDiscount => DiscountValue > BigDiscountThreshold;
 
-    public double FinalPrice => (Price ?? 0) * (1 - DiscountValue / 100);}
+    public double FinalPrice => (Price ?? 0) * (1 - DiscountValue / 100);
+
+    /// <summary>Все текстовые поля товара, по которым работает поиск.</summary>
+    public IEnumerable<string> SearchableTexts =>
+    [
+        Article ?? "",
+        ProductTitle,
+        CategoryName,
+        Description ?? "",
+        ManufacturerName,
+        SupplierName,
+        Unit ?? "",
+    ];
+}

@@ -82,6 +82,20 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
+        <Expander Header="Средства поиска" IsExpanded="True" Margin="6" BorderBrush="Gray">
+            <Grid Margin="10,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBox x:Name="SearchBox" Grid.Column="1" Padding="2"
+                         TextChanged="SearchBox_TextChanged"
+                         ToolTip="Ищет по артикулу, наименованию, категории, описанию, производителю и поставщику. Несколько слов через пробел — все должны найтись."/>
+            </Grid>
+        </Expander>
+
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding Products}"
                           ItemTemplate="{StaticResource ProductCardTemplate}"/>
